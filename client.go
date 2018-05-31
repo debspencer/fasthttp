@@ -176,6 +176,12 @@ type Client struct {
 	// DefaultMaxConnsPerHost is used if not set.
 	MaxConnsPerHost int
 
+	// Maximum number of attempts to make to to connect.
+	//
+	// By default (when MaxAttempts is 0 or below), the client makes a maximum of
+	// 5 attempts.
+	MaxAttempts int
+
 	// Idle keep-alive connections are closed after this duration.
 	//
 	// By default idle connections are closed
@@ -389,6 +395,7 @@ func (c *Client) Do(req *Request, resp *Response) error {
 			DialDualStack:                 c.DialDualStack,
 			IsTLS:                         isTLS,
 			TLSConfig:                     c.TLSConfig,
+			MaxAttempts:                   c.MaxAttempts,
 			MaxConns:                      c.MaxConnsPerHost,
 			MaxIdleConnDuration:           c.MaxIdleConnDuration,
 			ReadBufferSize:                c.ReadBufferSize,
